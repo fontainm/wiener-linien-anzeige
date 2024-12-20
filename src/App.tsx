@@ -44,6 +44,9 @@ function App() {
       updateDepartures(stationIds)
     })
 
+    // For local testing:
+    // updateDepartures([3445, 3448])
+
     // Anwendung wird mit sklera alle 60 Sekunden aktualisiert. Alternativ:
     // const interval = setInterval(updateDepartures, 60000)
     // return () => clearInterval(interval)
