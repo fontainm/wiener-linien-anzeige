@@ -1,10 +1,11 @@
 export interface Departure {
   line: string
   destination: string
-  departureTime: Date
+  countdown: number
 }
 
-const API_BASE_URL = 'https://www.wienerlinien.at/ogd_realtime/monitor'
+const API_BASE_URL =
+  'https://eogrkqip9l.execute-api.eu-west-1.amazonaws.com/monitor'
 
 export const fetchDepartures = async (stopId: string): Promise<Departure[]> => {
   const response = await fetch(`${API_BASE_URL}?stopId=${stopId}`)
@@ -17,8 +18,8 @@ export const fetchDepartures = async (stopId: string): Promise<Departure[]> => {
   const departures = data.data.monitors[0]?.lines[0]?.departures.departure || []
 
   return departures.map((departure: any) => ({
-    line: data.data.monitors[0].lines[0].name,
-    destination: departure.destination,
-    departureTime: new Date(departure.departureTime.timePlanned),
+    line: departure.vehicle.name,
+    destination: departure.vehicle.towards,
+    countdown: departure.departureTime.countdown,
   }))
 }
