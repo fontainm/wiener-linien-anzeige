@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { skleraSDK } from '@sklera/sdk'
 import { fetchDepartures, Departure } from './services/wienerLinienService'
+import DeparturesList from './components/DeparturesList'
 
 function App() {
   const [departures, setDepartures] = useState<Departure[]>([])
@@ -35,24 +36,7 @@ function App() {
   return (
     <div>
       <h1>Krakauer Straße</h1>
-      <div className="departures">
-        <div className="departure-header">
-          <div className="departure-wrapper">
-            <div>Linie</div>
-            <div>Ziel</div>
-            <div>Abfahrt</div>
-          </div>
-        </div>
-        {departures.map((departure, index) => (
-          <div key={index} className="departure-item">
-            <div className="departure-wrapper">
-              <div>{departure.line}</div>
-              <div>{departure.destination}</div>
-              <div>{departure.countdown}</div>
-            </div>
-          </div>
-        ))}
-      </div>
+      <DeparturesList departures={departures} />
     </div>
   )
 }
