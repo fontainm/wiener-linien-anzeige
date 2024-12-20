@@ -23,14 +23,12 @@ function App() {
   }
 
   useEffect(() => {
-    skleraSDK
-      .loaded()
-      .then(() => {
-        console.log('SDK ready!')
-      })
-      .catch((e) => {
-        console.error(e)
-      })
+    skleraSDK.loaded(function (screenData: any, appConfig: any) {
+      console.log('SDK ready!')
+      console.log(screenData)
+      console.log('runtime config:', appConfig)
+    })
+
     updateDepartures()
 
     const interval = setInterval(updateDepartures, 60000)
