@@ -5,6 +5,7 @@ import DeparturesList from './components/DeparturesList'
 
 function App() {
   const [departures, setDepartures] = useState<Departure[]>([])
+  const [error, setError] = useState<string | null>(null)
 
   const updateDepartures = async () => {
     try {
@@ -16,8 +17,8 @@ function App() {
       )
 
       setDepartures(sortedDepartures)
-    } catch (e) {
-      console.log(e)
+    } catch (error) {
+      setError('Fehler beim Abrufen der Abfahrtszeiten.')
     }
   }
 
@@ -31,7 +32,12 @@ function App() {
         console.error(e)
       })
     updateDepartures()
+
+    const interval = setInterval(updateDepartures, 60000)
+    return () => clearInterval(interval)
   }, [])
+
+  if (error) return <div className="error">{error}</div>
 
   return (
     <div>
