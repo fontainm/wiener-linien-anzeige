@@ -1,12 +1,29 @@
-import { useEffect } from "react";
-import { skleraSDK } from "@sklera/sdk";
+import { useEffect, useState } from 'react'
+import { skleraSDK } from '@sklera/sdk'
+import { fetchDepartures, Departure } from './services/wienerLinienService'
 
 function App() {
-  useEffect(() => {
-    skleraSDK.loaded().then(console.log).catch(console.error);
-  }, []);
+  const [departures, setDepartures] = useState<Departure[]>([])
 
-  return <div>Wiener Linien Anzeige</div>;
+  const updateDepartures = async () => {
+    try {
+      const data = await fetchDepartures('3445')
+      setDepartures(data)
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  useEffect(() => {
+    skleraSDK.loaded().then(console.log).catch(console.error)
+    updateDepartures()
+  }, [])
+
+  return (
+    <div>
+      <h1>Wiener Linien Anzeige</h1>
+    </div>
+  )
 }
 
-export default App;
+export default App
