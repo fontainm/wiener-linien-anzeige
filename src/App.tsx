@@ -4,6 +4,7 @@ import { fetchDepartures, Departure } from './services/wienerLinienService'
 import DeparturesList from './components/DeparturesList'
 
 function App() {
+  const [stationName, setStationName] = useState<string>('Krakauer Straße')
   const [departures, setDepartures] = useState<Departure[]>([])
   const [error, setError] = useState<string | null>(null)
 
@@ -27,19 +28,17 @@ function App() {
       console.log('SDK ready!')
       console.log(screenData)
       console.log('runtime config:', appConfig)
+      setStationName(appConfig.station_name)
     })
 
     updateDepartures()
-
-    const interval = setInterval(updateDepartures, 60000)
-    return () => clearInterval(interval)
   }, [])
 
   if (error) return <div className="error">{error}</div>
 
   return (
     <div>
-      <h1>Krakauer Straße</h1>
+      <h1>{stationName}</h1>
       <DeparturesList departures={departures} />
     </div>
   )
