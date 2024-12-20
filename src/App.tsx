@@ -18,7 +18,7 @@ function App() {
 
       setDepartures(sortedDepartures)
     } catch (error) {
-      setError('Fehler beim Abrufen der Abfahrtszeiten.')
+      setError(`Fehler beim Abrufen der Abfahrtszeiten: ${error}`)
     }
   }
 
