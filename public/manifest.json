@@ -11,7 +11,7 @@
   "config": [
     {
       "name": "station",
-      "label": "Station",
+      "label": "Haltestelle",
       "type": "select",
       "values": [
         { "label": "Krakauer Straße", "value": "[3445, 3448]" },

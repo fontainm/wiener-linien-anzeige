@@ -4,10 +4,12 @@ import { fetchDepartures, Departure } from './services/wienerLinienService'
 import DeparturesList from './components/DeparturesList'
 
 function App() {
+  const [loading, setLoading] = useState<Boolean>(false)
   const [departures, setDepartures] = useState<Departure[]>([])
   const [error, setError] = useState<string | null>(null)
 
   const updateDepartures = async (stationIds: number[]) => {
+    setLoading(true)
     try {
       let stations: any[] = []
 
@@ -26,6 +28,7 @@ function App() {
     } catch (error) {
       setError(`Fehler beim Abrufen der Abfahrtszeiten: ${error}`)
     }
+    setLoading(false)
   }
 
   useEffect(() => {
@@ -36,11 +39,13 @@ function App() {
       const stationIds = JSON.parse(appConfig.station)
       updateDepartures(stationIds)
     })
-    
+
     // Anwendung wird mit sklera alle 60 Sekunden aktualisiert. Alternativ:
     // const interval = setInterval(updateDepartures, 60000)
     // return () => clearInterval(interval)
   }, [])
+
+  if (loading) return <div className="loading">Loading...</div>
 
   if (error) return <div className="error">{error}</div>
 
