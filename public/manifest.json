@@ -10,9 +10,15 @@
   "snapshot": "thumbnail.png",
   "config": [
     {
-      "name": "station_name",
-      "label": "Station Name",
-      "type": "string"
+      "name": "station",
+      "label": "Station",
+      "type": "select",
+      "values": [
+        { "label": "Krakauer Straße", "value": "[3445, 3448]" },
+        { "label": "Franzensbrücke", "value": "[310, 332]" },
+        { "label": "Sechskrügelgasse", "value": "[308, 334]" }
+      ],
+      "desc": "Wähle eine Haltestelle aus."
     }
   ]
 }

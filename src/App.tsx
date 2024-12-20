@@ -4,16 +4,21 @@ import { fetchDepartures, Departure } from './services/wienerLinienService'
 import DeparturesList from './components/DeparturesList'
 
 function App() {
-  const [stationName, setStationName] = useState<string>('Krakauer Straße')
   const [departures, setDepartures] = useState<Departure[]>([])
   const [error, setError] = useState<string | null>(null)
 
-  const updateDepartures = async () => {
+  const updateDepartures = async (stationIds: number[]) => {
     try {
-      const data1 = await fetchDepartures('3445')
-      const data2 = await fetchDepartures('3448')
+      let stations: any[] = []
 
-      const sortedDepartures = [...data1, ...data2].sort(
+      const promises = stationIds.map(async (stationId: number) => {
+        const data = await fetchDepartures(stationId)
+        stations.push(...data)
+      })
+
+      await Promise.all(promises)
+
+      const sortedDepartures = stations.sort(
         (a, b) => a.countdown - b.countdown
       )
 
@@ -28,11 +33,10 @@ function App() {
       console.log('SDK ready!')
       console.log(screenData)
       console.log('runtime config:', appConfig)
-      setStationName(appConfig.station_name)
+      const stationIds = JSON.parse(appConfig.station)
+      updateDepartures(stationIds)
     })
-
-    updateDepartures()
-
+    
     // Anwendung wird mit sklera alle 60 Sekunden aktualisiert. Alternativ:
     // const interval = setInterval(updateDepartures, 60000)
     // return () => clearInterval(interval)
@@ -42,7 +46,7 @@ function App() {
 
   return (
     <div>
-      <h1>{stationName}</h1>
+      <h1>{departures[0]?.location}</h1>
       <DeparturesList departures={departures} />
     </div>
   )
