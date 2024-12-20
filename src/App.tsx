@@ -8,6 +8,7 @@ function App() {
   const updateDepartures = async () => {
     try {
       const data = await fetchDepartures('3445')
+      console.log(data)
       setDepartures(data)
     } catch (e) {
       console.log(e)
@@ -22,6 +23,12 @@ function App() {
   return (
     <div>
       <h1>Wiener Linien Anzeige</h1>
+      {departures.map((departure) => (
+        <div>
+          <div>{departure.line}</div>
+          <div>{departure.destination}</div>
+        </div>
+      ))}
     </div>
   )
 }
