@@ -32,6 +32,10 @@ function App() {
     })
 
     updateDepartures()
+
+    // Anwendung wird mit sklera alle 60 Sekunden aktualisiert. Alternativ:
+    // const interval = setInterval(updateDepartures, 60000)
+    // return () => clearInterval(interval)
   }, [])
 
   if (error) return <div className="error">{error}</div>
