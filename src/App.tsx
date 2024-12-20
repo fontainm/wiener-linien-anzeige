@@ -9,6 +9,10 @@ function App() {
   const [error, setError] = useState<string | null>(null)
 
   const updateDepartures = async (stationIds: number[]) => {
+    if (!stationIds.length) {
+      return setError('Keine Haltestelle ausgewählt')
+    }
+
     setLoading(true)
     try {
       let stations: any[] = []
